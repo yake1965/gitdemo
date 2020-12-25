@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% block nav %} 
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #e3f2fd;">
+  <a class="navbar-brand" href="#">导航栏</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarToggler">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'home' %}">首页<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'exam:index' %}">在线考试<span class="sr-only">(current)</span></a>
+      </li>
+  </div>
+</nav> 
+
+{% endblock %}
+{% block main %}
+
+<div class="container mx-auto ">
+  <div class="float-left m-5 p-3 border">
+    <H3>个人信息</H3>
+    <table class="table">
+      <thead>
+        <tr class="table-active">
+          <th>属性</th>
+          <th>信息</th>  
+        </tr>
+      </thead>
+      <tbody class=" text-left">
+        <tr>
+          <td>学号</td>
+          <td>{{ student.id }}</td>  
+        </tr>
+        <tr class="table-active">
+          <td>姓名</td>
+          <td>{{ student.name }}</td>  
+        </tr>
+        <tr>
+          <td>性别</td>
+          <td>{{ student.gender }}</td>  
+        </tr>
+        <tr class="table-active">
+          <td>学院</td>
+          <td>{{ student.dept }}</td>  
+        </tr>  
+         <tr>
+          <td>专业</td>
+          <td>{{ student.major }}</td>  
+        </tr>  
+        <tr class="table-active">
+          <td>邮箱地址</td>
+          <td>{{ student.email }}</td>  
+        </tr>
+        <tr>
+          <td>出生日期</td>
+          <td>{{ student.birth }}</td>  
+        </tr>  
+        <tr class="table-active">
+          <td>电话</td>
+          <td>{{ student.telephone }}</td>  
+        </tr>
+      </tbody>
+    </table>
+  </div>  
+
+  <div class="float-left border p-3 mt-5">
+    <h3>考试信息</h3>    
+    <table class="table">
+      <thead>
+        <tr>
+          <th>考试科目</th>
+          <th>考试时间</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+      <!-- 有关该生的所有试卷 -->
+      {% for p in paper %}
+      <tr class="table-info">
+        <td>{{ p.subject }}</td>
+        <td>{{ p.examtime }}</td>
+        <td>
+          <!-- 学号和试卷号 startExam视图 -->
+          <a href="/exam/startExam/?sid={{ student.id }}&pid={{ p.id }}">
+            <button class="btn btn-primary" id="toExam+{{ p.subject }}">开始考试</button>
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+    
+  <div class="float-left border p-3 m-5">
+    <h3>考试成绩</h3>
+
+    <table class="table">
+      <thead>
+        <tr>
+
+          <th>科目</th>
+          <th>成绩</th>
+        </tr>
+      </thead>
+    <tbody>
+    {% for grade1 in grade %}
+      <tr class="table-primary">
+
+        <td>{{ grade1.subject }}</td>
+        <td>{{ grade1.grade }}</td>
+      </tr>
+    {% endfor %}  
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<div style="clear: both;"></div>
+
+{% endblock %}
+
+
